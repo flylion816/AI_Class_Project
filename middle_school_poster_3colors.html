@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>未来创想家·AI青少年实战营</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background: linear-gradient(135deg, #e8f0fe 0%, #f0f4ff 50%, #f3e8ff 100%);
+            min-height: 100vh;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* 背景点缀 */
+        .bg-decoration {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .circle-float {
+            position: absolute;
+            border-radius: 50%;
+            animation: gentleFloat 6s ease-in-out infinite;
+        }
+
+        @keyframes gentleFloat {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-20px) scale(1.05); }
+        }
+
+        .circle-1 {
+            width: 200px;
+            height: 200px;
+            background: rgba(102, 126, 234, 0.15);
+            top: 5%;
+            left: 5%;
+            animation-delay: 0s;
+            box-shadow: 0 0 40px rgba(102, 126, 234, 0.2);
+        }
+
+        .circle-2 {
+            width: 250px;
+            height: 250px;
+            background: rgba(139, 92, 246, 0.12);
+            top: 55%;
+            right: 3%;
+            animation-delay: 2s;
+            box-shadow: 0 0 50px rgba(139, 92, 246, 0.2);
+        }
+
+        .circle-3 {
+            width: 180px;
+            height: 180px;
+            background: rgba(102, 126, 234, 0.12);
+            bottom: 10%;
+            left: 8%;
+            animation-delay: 1s;
+            box-shadow: 0 0 40px rgba(102, 126, 234, 0.18);
+        }
+        
+        .poster {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+            position: relative;
+            z-index: 10;
+        }
+        
+        /* 顶部重点条 */
+        .top-bar {
+            height: 8px;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        /* 头部区域 */
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 60px 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="1" fill="white" opacity="0.1"/><circle cx="50" cy="30" r="1" fill="white" opacity="0.1"/><circle cx="80" cy="50" r="1" fill="white" opacity="0.1"/><circle cx="30" cy="70" r="1" fill="white" opacity="0.1"/><circle cx="70" cy="80" r="1" fill="white" opacity="0.1"/></svg>');
+            background-size: 100px 100px;
+            pointer-events: none;
+        }
+
+        .age-badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            color: rgba(255, 255, 255, 0.9);
+            padding: 8px 20px;
+            border-radius: 40px;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .main-title {
+            font-size: 48px;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 15px;
+            line-height: 1.2;
+            animation: fadeInScale 0.6s ease-out;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        @keyframes fadeInScale {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .subtitle {
+            font-size: 20px;
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 500;
+        }
+
+        /* 内容区域 */
+        .content {
+            padding: 50px 40px;
+            background: white;
+        }
+
+        /* 核心价值展示 */
+        .core-value {
+            background: linear-gradient(135deg, #f0f4ff 0%, #faf5ff 100%);
+            padding: 40px;
+            border-radius: 15px;
+            margin-bottom: 50px;
+            border-left: 6px solid #667eea;
+            text-align: center;
+            animation: slideInLeft 0.6s ease-out;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.08);
+        }
+
+        .core-value:hover {
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.12);
+            transform: translateX(5px);
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .core-value-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .core-value-text {
+            font-size: 18px;
+            line-height: 1.8;
+            color: #1e40af;
+            font-weight: 500;
+        }
+
+        /* 技能卡片网格 */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+            margin: 50px 0;
+        }
+
+        .skill-card {
+            background: #f8fafc;
+            padding: 35px 30px;
+            border-radius: 12px;
+            text-align: center;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+            animation: fadeIn 0.6s ease-out;
+            animation-fill-mode: both;
+        }
+
+        .skill-card:nth-child(1) { animation-delay: 0.1s; }
+        .skill-card:nth-child(2) { animation-delay: 0.2s; }
+        .skill-card:nth-child(3) { animation-delay: 0.3s; }
+        .skill-card:nth-child(4) { animation-delay: 0.4s; }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .skill-card:hover {
+            border-color: #667eea;
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.15);
+            transform: translateY(-8px);
+        }
+
+        /* 紫色强调卡片 */
+        .skill-card.accent {
+            background: linear-gradient(135deg, #faf5ff 0%, #f3e8ff 100%);
+        }
+
+        .skill-card.accent:hover {
+            border-color: #8b5cf6;
+            box-shadow: 0 15px 40px rgba(139, 92, 246, 0.2);
+        }
+
+        .skill-icon {
+            font-size: 52px;
+            margin-bottom: 20px;
+            filter: grayscale(0.2);
+        }
+
+        .skill-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: #1e40af;
+            margin-bottom: 15px;
+        }
+
+        .skill-desc {
+            font-size: 15px;
+            color: #64748b;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        /* 蓝色标签 - 主要 */
+        .tag {
+            background: #667eea;
+            color: white;
+            padding: 6px 15px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        /* 紫色标签 - 强调 */
+        .tag.accent {
+            background: #8b5cf6;
+        }
+
+        /* 成果展示 */
+        .achievements {
+            margin: 60px 0;
+        }
+
+        .achievements-title {
+            font-size: 32px;
+            font-weight: 700;
+            color: #1e40af;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .achievement-cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .achievement-card {
+            background: white;
+            border: 2px solid #e5e7eb;
+            padding: 30px 20px;
+            border-radius: 12px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .achievement-card:hover {
+            border-color: #667eea;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.12);
+            transform: translateY(-5px);
+        }
+
+        /* 部分卡片紫色强调 */
+        .achievement-card.accent:hover {
+            border-color: #8b5cf6;
+            box-shadow: 0 10px 30px rgba(139, 92, 246, 0.15);
+        }
+
+        .achievement-icon {
+            font-size: 42px;
+            margin-bottom: 15px;
+            filter: grayscale(0.2);
+        }
+
+        .achievement-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #1e40af;
+            margin-bottom: 8px;
+        }
+
+        .achievement-desc {
+            font-size: 14px;
+            color: #64748b;
+        }
+
+        /* 对比展示 */
+        .comparison {
+            margin: 60px 0;
+            padding: 50px 0;
+            background: #f8fafc;
+            border-radius: 15px;
+        }
+
+        .comparison-title {
+            font-size: 32px;
+            font-weight: 700;
+            color: #1e40af;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .comparison-cards {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            padding: 0 40px;
+        }
+
+        .comparison-card {
+            background: white;
+            padding: 35px 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .comparison-card.old-way {
+            border: 2px solid #e5e7eb;
+        }
+
+        .comparison-card.new-way {
+            border: 2px solid #667eea;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.12);
+            background: linear-gradient(135deg, #ffffff 0%, #f0f4ff 100%);
+        }
+
+        .comparison-label {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e5e7eb;
+        }
+
+        .old-way .comparison-label {
+            color: #64748b;
+        }
+
+        .new-way .comparison-label {
+            color: #667eea;
+        }
+
+        .comparison-list {
+            list-style: none;
+        }
+
+        .comparison-list li {
+            padding: 12px 0;
+            font-size: 16px;
+            line-height: 1.6;
+            position: relative;
+            padding-left: 28px;
+        }
+
+        .old-way .comparison-list li {
+            color: #64748b;
+        }
+
+        .old-way .comparison-list li::before {
+            content: '•';
+            position: absolute;
+            left: 8px;
+            color: #cbd5e1;
+            font-size: 20px;
+        }
+
+        .new-way .comparison-list li {
+            color: #1e40af;
+            font-weight: 500;
+        }
+
+        .new-way .comparison-list li::before {
+            content: '✓';
+            position: absolute;
+            left: 8px;
+            color: #667eea;
+            font-weight: 700;
+        }
+
+        /* 家长推荐 */
+        .testimonials {
+            margin: 60px 0;
+            padding: 50px 40px;
+            background: linear-gradient(135deg, #f0f4ff 0%, #faf5ff 100%);
+            border-radius: 15px;
+            border-left: 6px solid #8b5cf6;
+        }
+
+        .testimonial-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: #1e40af;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .testimonial-content {
+            position: relative;
+            text-align: center;
+        }
+
+        .quote-mark {
+            font-size: 80px;
+            color: #8b5cf6;
+            opacity: 0.2;
+            line-height: 0;
+            display: block;
+            margin-bottom: 20px;
+        }
+
+        .testimonial-text {
+            font-size: 18px;
+            line-height: 2;
+            color: #1e40af;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* CTA区域 */
+        .cta-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 60px 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="white" opacity="0.1"/><circle cx="50" cy="30" r="2" fill="white" opacity="0.1"/><circle cx="80" cy="50" r="2" fill="white" opacity="0.1"/><circle cx="30" cy="70" r="2" fill="white" opacity="0.1"/><circle cx="70" cy="80" r="2" fill="white" opacity="0.1"/></svg>');
+            background-size: 200px 200px;
+            pointer-events: none;
+        }
+
+        .cta-title {
+            font-size: 36px;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .cta-subtitle {
+            font-size: 18px;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 40px;
+            line-height: 1.8;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* 统一按钮样式 - 全部白底蓝字 */
+        .cta-button {
+            display: inline-block;
+            background: white;
+            color: #667eea;
+            padding: 18px 50px;
+            border-radius: 50px;
+            font-size: 20px;
+            font-weight: 700;
+            text-decoration: none;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 2;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+            background: #f0f4ff;
+        }
+
+        .offers {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 40px;
+            flex-wrap: wrap;
+            position: relative;
+            z-index: 2;
+        }
+
+        .offer-item {
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            padding: 10px 25px;
+            border-radius: 30px;
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        /* 底部 */
+        .footer-section {
+            background: white;
+            padding: 35px 40px;
+            text-align: center;
+            border-top: 2px solid #e5e7eb;
+            animation: slideInUp 0.6s ease-out;
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .footer-text {
+            color: #667eea;
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 1024px) {
+            .achievement-cards {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .comparison-cards {
+                grid-template-columns: 1fr;
+            }
+
+            .achievement-cards {
+                grid-template-columns: 1fr;
+            }
+
+            .main-title {
+                font-size: 36px;
+            }
+
+            .cta-title {
+                font-size: 24px;
+            }
+
+            .offers {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .offer-item {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 背景装饰 -->
+    <div class="bg-decoration">
+        <div class="circle-float circle-1"></div>
+        <div class="circle-float circle-2"></div>
+        <div class="circle-float circle-3"></div>
+    </div>
+
+    <div class="poster">
+        <!-- 顶部条 -->
+        <div class="top-bar"></div>
+        
+        <!-- 头部 -->
+        <div class="header">
+            <div class="age-badge">5-8年级 · 11-14岁</div>
+            <h1 class="main-title">未来创想家·AI青少年实战营</h1>
+            <p class="subtitle">让AI成为你的超能力</p>
+        </div>
+        
+        <!-- 内容区 -->
+        <div class="content">
+            <!-- 核心价值 -->
+            <div class="core-value">
+                <h2 class="core-value-title">不是学AI，是用AI创造未来</h2>
+                <p class="core-value-text">
+                    当同龄人还在传统补习班刷题时<br>
+                    您的孩子已经在指挥AI创造价值
+                </p>
+            </div>
+            
+            <!-- 技能培养 -->
+            <div class="skills-grid">
+                <div class="skill-card">
+                    <div class="skill-icon">💻</div>
+                    <h3 class="skill-title">AI编程实战</h3>
+                    <p class="skill-desc">不只是学代码，而是用AI帮你写代码，完成真实项目</p>
+                    <div class="skill-tags">
+                        <span class="tag">Python</span>
+                        <span class="tag">ChatGPT</span>
+                        <span class="tag">GitHub</span>
+                    </div>
+                </div>
+                
+                <div class="skill-card accent">
+                    <div class="skill-icon">🎨</div>
+                    <h3 class="skill-title">创意内容生产</h3>
+                    <p class="skill-desc">短片、动画、海报、音乐 - 把想法变成专业作品</p>
+                    <div class="skill-tags">
+                        <span class="tag accent">Midjourney</span>
+                        <span class="tag accent">Runway</span>
+                        <span class="tag accent">Suno</span>
+                    </div>
+                </div>
+                
+                <div class="skill-card">
+                    <div class="skill-icon">📊</div>
+                    <h3 class="skill-title">数据分析能力</h3>
+                    <p class="skill-desc">让数据说话，用可视化展示，做有说服力的报告</p>
+                    <div class="skill-tags">
+                        <span class="tag">Excel+AI</span>
+                        <span class="tag">数据可视化</span>
+                    </div>
+                </div>
+                
+                <div class="skill-card accent">
+                    <div class="skill-icon">🤖</div>
+                    <h3 class="skill-title">AI工具整合</h3>
+                    <p class="skill-desc">掌握30+主流AI工具，构建属于自己的个人智能工作流</p>
+                    <div class="skill-tags">
+                        <span class="tag accent">Prompt工程</span>
+                        <span class="tag accent">API调用</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 成果展示 -->
+            <div class="achievements">
+                <h2 class="achievements-title">每学期必出作品集</h2>
+                <div class="achievement-cards">
+                    <div class="achievement-card">
+                        <div class="achievement-icon">🎬</div>
+                        <div class="achievement-title">AI短片创作</div>
+                        <div class="achievement-desc">3分钟科幻/动画短片</div>
+                    </div>
+                    <div class="achievement-card accent">
+                        <div class="achievement-icon">🤖</div>
+                        <div class="achievement-title">智能学习助手</div>
+                        <div class="achievement-desc">定制化AI辅导工具</div>
+                    </div>
+                    <div class="achievement-card">
+                        <div class="achievement-icon">🎮</div>
+                        <div class="achievement-title">互动游戏开发</div>
+                        <div class="achievement-desc">AI驱动的小游戏</div>
+                    </div>
+                    <div class="achievement-card accent">
+                        <div class="achievement-icon">📈</div>
+                        <div class="achievement-title">数据研究报告</div>
+                        <div class="achievement-desc">社会议题深度分析</div>
+                    </div>
+                    <div class="achievement-card">
+                        <div class="achievement-icon">🎨</div>
+                        <div class="achievement-title">AI艺术设计</div>
+                        <div class="achievement-desc">AI生成的创意作品集</div>
+                    </div>
+                    <div class="achievement-card accent">
+                        <div class="achievement-icon">📝</div>
+                        <div class="achievement-title">创意写作集</div>
+                        <div class="achievement-desc">AI辅助文章/故事创作</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 对比展示 -->
+            <div class="comparison">
+                <h2 class="comparison-title">选择的差异，决定未来的距离</h2>
+                <div class="comparison-cards">
+                    <div class="comparison-card old-way">
+                        <div class="comparison-label">传统学习模式</div>
+                        <ul class="comparison-list">
+                            <li>还在"找答案"</li>
+                            <li>刷题提分</li>
+                            <li>被动接收知识</li>
+                            <li>单一学科思维</li>
+                            <li>纸上谈兵</li>
+                        </ul>
+                    </div>
+                    <div class="comparison-card new-way">
+                        <div class="comparison-label">AI青少年实战营</div>
+                        <ul class="comparison-list">
+                            <li>已在"给指令、交成果"</li>
+                            <li>项目实战提能力</li>
+                            <li>主动创造价值</li>
+                            <li>跨学科融合思维</li>
+                            <li>实战项目说话</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 家长推荐 -->
+            <div class="testimonials">
+                <h2 class="testimonial-title">家长真实反馈</h2>
+                <div class="testimonial-content">
+                    <span class="quote-mark">"</span>
+                    <p class="testimonial-text">
+                        孩子参加AI实战营后，不仅成绩提升了，更重要的是思维方式完全改变了。
+                        现在他会用AI辅助学习,效率提升了一倍，还能自己创作动画和游戏。
+                        看着孩子从被动学习变成主动创造，这才是我想要的教育！
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- CTA区域 -->
+        <div class="cta-section">
+            <div class="cta-pattern"></div>
+            <h2 class="cta-title">别让孩子输在AI时代的起跑线上</h2>
+            <p class="cta-subtitle">
+                当同龄人还在传统补习班刷题时<br>
+                您的孩子已经在指挥AI创造价值
+            </p>
+            <a href="#" class="cta-button">立即锁定名额</a>
+            <div class="offers">
+                <span class="offer-item">小班精品教学</span>
+                <span class="offer-item">免费试听体验</span>
+                <span class="offer-item">竞赛辅导支持</span>
+                <span class="offer-item">作品集指导</span>
+            </div>
+        </div>
+        
+        <!-- 底部 -->
+        <div class="footer-section">
+            <p class="footer-text">成就每一个孩子的AI梦想</p>
+        </div>
+    </div>
+</body>
+</html>

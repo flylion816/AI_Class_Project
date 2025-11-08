@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI魔法课堂 - 幼儿园大班</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700;900&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* 背景装饰圆圈 */
+        .bg-decoration {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .circle-float {
+            position: absolute;
+            border-radius: 50%;
+            animation: gentleFloat 6s ease-in-out infinite;
+        }
+
+        @keyframes gentleFloat {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-20px) scale(1.05); }
+        }
+
+        .circle-1 {
+            width: 150px;
+            height: 150px;
+            background: linear-gradient(135deg, rgba(240, 147, 251, 0.2), rgba(245, 87, 108, 0.15));
+            top: 10%;
+            left: 8%;
+            animation-delay: 0s;
+            box-shadow: 0 0 50px rgba(240, 147, 251, 0.3);
+        }
+
+        .circle-2 {
+            width: 200px;
+            height: 200px;
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.2), rgba(255, 193, 7, 0.15));
+            top: 50%;
+            right: 5%;
+            animation-delay: 2s;
+            box-shadow: 0 0 60px rgba(255, 215, 0, 0.3);
+        }
+
+        .circle-3 {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, rgba(168, 237, 234, 0.2), rgba(254, 214, 227, 0.15));
+            bottom: 15%;
+            left: 10%;
+            animation-delay: 1s;
+            box-shadow: 0 0 40px rgba(168, 237, 234, 0.3);
+        }
+        
+        .poster {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 30px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            position: relative;
+            z-index: 10;
+        }
+
+        /* 顶部彩色条 */
+        .top-bar {
+            height: 8px;
+            background: linear-gradient(90deg, #f093fb, #f5576c, #FFD700, #a8edea, #fed6e3);
+            background-size: 200% 100%;
+            animation: topBarShift 6s ease infinite;
+        }
+
+        @keyframes topBarShift {
+            0% { background-position: 0% center; }
+            50% { background-position: 100% center; }
+            100% { background-position: 0% center; }
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            padding: 60px 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            background-size: 400% 400%;
+            animation: gradientFlow 10s ease infinite;
+        }
+
+        @keyframes gradientFlow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* 头部装饰点 */
+        .header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="1.5" fill="white" opacity="0.15"/><circle cx="50" cy="30" r="1.5" fill="white" opacity="0.15"/><circle cx="80" cy="50" r="1.5" fill="white" opacity="0.15"/><circle cx="30" cy="70" r="1.5" fill="white" opacity="0.15"/><circle cx="70" cy="80" r="1.5" fill="white" opacity="0.15"/></svg>');
+            background-size: 100px 100px;
+            pointer-events: none;
+        }
+        
+        .header::before {
+            content: '🚀🌟✨🎨🤖';
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 30px;
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(-10px); }
+        }
+        
+        .main-title {
+            font-size: 48px;
+            font-weight: 900;
+            color: white;
+            margin-top: 30px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            line-height: 1.2;
+            animation: fadeInScale 0.6s ease-out, glow 3s ease-in-out infinite;
+        }
+
+        @keyframes fadeInScale {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes glow {
+            0%, 100% { text-shadow: 2px 2px 4px rgba(0,0,0,0.2); }
+            50% { text-shadow: 0 0 20px rgba(255, 255, 255, 0.6), 0 0 30px rgba(255, 215, 0, 0.4); }
+        }
+        
+        .subtitle {
+            font-size: 24px;
+            color: rgba(255,255,255,0.95);
+            margin-top: 15px;
+            font-weight: 700;
+            animation: fadeIn 0.8s ease-out 0.3s backwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .age-badge {
+            display: inline-block;
+            background: #FFD700;
+            color: #333;
+            padding: 10px 25px;
+            border-radius: 50px;
+            font-size: 20px;
+            font-weight: bold;
+            margin-top: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            animation: fadeIn 1s ease-out 0.5s backwards, badgePulse 2s ease-in-out 2s infinite;
+        }
+
+        @keyframes badgePulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        .content {
+            padding: 50px 40px;
+        }
+        
+        .highlight-box {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            padding: 30px;
+            border-radius: 20px;
+            margin-bottom: 40px;
+            position: relative;
+            animation: slideInLeft 0.6s ease-out;
+            box-shadow: 0 10px 30px rgba(252, 182, 159, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .highlight-box:hover {
+            box-shadow: 0 15px 40px rgba(252, 182, 159, 0.4);
+            transform: translateX(5px);
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        .highlight-icon {
+            position: absolute;
+            top: -20px;
+            left: 30px;
+            background: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            animation: iconBounce 2s ease-in-out infinite;
+        }
+
+        @keyframes iconBounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+        
+        .highlight-title {
+            font-size: 28px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 15px;
+            margin-top: 20px;
+        }
+        
+        .highlight-text {
+            font-size: 20px;
+            color: #555;
+            line-height: 1.6;
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+            margin: 40px 0;
+        }
+        
+        .feature-card {
+            background: linear-gradient(145deg, #f3f4f6, #ffffff);
+            padding: 25px;
+            border-radius: 15px;
+            border: 2px solid #e5e7eb;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            animation: slideInUp 0.6s ease-out backwards;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #f093fb, #f5576c);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .feature-card:nth-child(1) { animation-delay: 0.1s; }
+        .feature-card:nth-child(2) { animation-delay: 0.2s; }
+        .feature-card:nth-child(3) { animation-delay: 0.3s; }
+        .feature-card:nth-child(4) { animation-delay: 0.4s; }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            border-color: #f093fb;
+        }
+
+        .feature-card:hover::before {
+            opacity: 1;
+        }
+        
+        .feature-emoji {
+            font-size: 36px;
+            margin-bottom: 10px;
+            display: inline-block;
+            animation: emojiFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes emojiFloat {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-5px) rotate(5deg); }
+        }
+        
+        .feature-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 8px;
+        }
+        
+        .feature-desc {
+            font-size: 16px;
+            color: #666;
+            line-height: 1.5;
+        }
+        
+        .results-section {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            padding: 35px;
+            border-radius: 20px;
+            margin: 40px 0;
+            animation: fadeInScale 0.8s ease-out;
+            box-shadow: 0 10px 30px rgba(168, 237, 234, 0.3);
+        }
+        
+        .results-title {
+            font-size: 28px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 30px;
+            text-align: center;
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .result-items {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+        
+        .result-item {
+            background: white;
+            padding: 25px 20px;
+            border-radius: 12px;
+            text-align: center;
+            border: 3px solid #fcd34d;
+            transition: all 0.3s ease;
+            animation: floatIn 0.6s ease-out backwards;
+            box-shadow: 0 8px 16px rgba(252, 182, 159, 0.2);
+        }
+
+        @keyframes floatIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .result-item:nth-child(1) {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border-color: #fcd34d;
+            animation-delay: 0.1s;
+        }
+
+        .result-item:nth-child(2) {
+            background: linear-gradient(135deg, #fce7f3 0%, #fbcfe8 100%);
+            border-color: #f472b6;
+            animation-delay: 0.2s;
+        }
+
+        .result-item:nth-child(3) {
+            background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+            border-color: #60a5fa;
+            animation-delay: 0.3s;
+        }
+
+        .result-item:nth-child(4) {
+            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+            border-color: #86efac;
+            animation-delay: 0.4s;
+        }
+
+        .result-item:nth-child(5) {
+            background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+            border-color: #fca5a5;
+            animation-delay: 0.5s;
+        }
+
+        .result-item:nth-child(6) {
+            background: linear-gradient(135deg, #ede9fe 0%, #ddd6fe 100%);
+            border-color: #c4b5fd;
+            animation-delay: 0.6s;
+        }
+
+        .result-item:hover {
+            transform: translateY(-15px) scale(1.08) rotate(-2deg);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.25);
+            border-color: currentColor;
+        }
+
+        .result-item:nth-child(1):hover {
+            box-shadow: 0 20px 50px rgba(202, 138, 4, 0.35);
+        }
+
+        .result-item:nth-child(2):hover {
+            box-shadow: 0 20px 50px rgba(244, 114, 182, 0.35);
+        }
+
+        .result-item:nth-child(3):hover {
+            box-shadow: 0 20px 50px rgba(96, 165, 250, 0.35);
+        }
+
+        .result-item:nth-child(4):hover {
+            box-shadow: 0 20px 50px rgba(34, 197, 94, 0.35);
+        }
+
+        .result-item:nth-child(5):hover {
+            box-shadow: 0 20px 50px rgba(220, 38, 38, 0.35);
+        }
+
+        .result-item:nth-child(6):hover {
+            box-shadow: 0 20px 50px rgba(139, 92, 246, 0.35);
+        }
+
+        .result-item:hover .result-icon {
+            animation: bounce 0.6s ease-in-out;
+            font-size: 50px;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-15px) scale(1.15); }
+        }
+        
+        .result-icon {
+            font-size: 40px;
+            margin-bottom: 12px;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+        
+        .result-text {
+            font-size: 16px;
+            font-weight: 700;
+            color: #444;
+            transition: all 0.3s ease;
+        }
+
+        .result-item:nth-child(1) .result-text {
+            color: #b45309;
+        }
+
+        .result-item:nth-child(2) .result-text {
+            color: #be185d;
+        }
+
+        .result-item:nth-child(3) .result-text {
+            color: #1e40af;
+        }
+
+        .result-item:nth-child(4) .result-text {
+            color: #065f46;
+        }
+
+        .result-item:nth-child(5) .result-text {
+            color: #b91c1c;
+        }
+
+        .result-item:nth-child(6) .result-text {
+            color: #5b21b6;
+        }
+
+        .result-item:hover .result-text {
+            transform: scale(1.1);
+        }
+
+        .result-desc {
+            font-size: 13px;
+            color: #666;
+            margin-top: 5px;
+        }
+        
+        .parent-quote {
+            background: #FFF9E6;
+            border-left: 5px solid #FFD700;
+            padding: 25px;
+            margin: 40px 0;
+            border-radius: 10px;
+            animation: slideInRight 0.6s ease-out;
+            transition: all 0.3s ease;
+        }
+
+        .parent-quote:hover {
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.2);
+            transform: translateX(-5px);
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        .quote-text {
+            font-size: 22px;
+            font-style: italic;
+            color: #555;
+            line-height: 1.6;
+        }
+        
+        .quote-author {
+            font-size: 16px;
+            color: #888;
+            margin-top: 15px;
+            text-align: right;
+        }
+        
+        .why-now {
+            background: linear-gradient(135deg, #fccb90 0%, #d57eeb 100%);
+            padding: 35px;
+            border-radius: 20px;
+            margin: 40px 0;
+            text-align: center;
+            animation: fadeInScale 0.8s ease-out;
+            box-shadow: 0 10px 30px rgba(213, 126, 235, 0.3);
+        }
+        
+        .why-now-title {
+            font-size: 30px;
+            font-weight: bold;
+            color: white;
+            margin-bottom: 20px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+        
+        .why-now-items {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-top: 25px;
+        }
+        
+        .why-item {
+            background: rgba(255,255,255,0.95);
+            padding: 20px;
+            border-radius: 15px;
+            flex: 1;
+            min-width: 200px;
+            transition: all 0.3s ease;
+            animation: slideInUp 0.6s ease-out backwards;
+        }
+
+        .why-item:nth-child(1) { animation-delay: 0.3s; }
+        .why-item:nth-child(2) { animation-delay: 0.5s; }
+        .why-item:nth-child(3) { animation-delay: 0.7s; }
+
+        .why-item:hover {
+            transform: translateY(-8px) scale(1.05);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+        }
+        
+        .why-number {
+            font-size: 36px;
+            font-weight: bold;
+            color: #f5576c;
+            margin-bottom: 10px;
+            animation: numberPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes numberPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        
+        .why-text {
+            font-size: 16px;
+            color: #333;
+            font-weight: 600;
+        }
+        
+        .cta-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 50px 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            background-size: 400% 400%;
+            animation: gradientFlow 10s ease infinite;
+        }
+
+        /* CTA装饰点 */
+        .cta-section::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="white" opacity="0.1"/><circle cx="50" cy="30" r="2" fill="white" opacity="0.1"/><circle cx="80" cy="50" r="2" fill="white" opacity="0.1"/><circle cx="30" cy="70" r="2" fill="white" opacity="0.1"/><circle cx="70" cy="80" r="2" fill="white" opacity="0.1"/></svg>');
+            background-size: 200px 200px;
+            pointer-events: none;
+        }
+        
+        .cta-title {
+            font-size: 36px;
+            font-weight: bold;
+            color: white;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 2;
+            animation: fadeInScale 0.6s ease-out;
+        }
+        
+        .cta-subtitle {
+            font-size: 20px;
+            color: rgba(255,255,255,0.9);
+            margin-bottom: 35px;
+            line-height: 1.6;
+            position: relative;
+            z-index: 2;
+            animation: fadeIn 0.8s ease-out 0.2s backwards;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background: #FFD700;
+            color: #333;
+            padding: 20px 50px;
+            font-size: 24px;
+            font-weight: bold;
+            border-radius: 50px;
+            text-decoration: none;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+            animation: buttonPulse 2s ease-in-out infinite;
+            position: relative;
+            z-index: 2;
+        }
+        
+        @keyframes buttonPulse {
+            0%, 100% { transform: scale(1); box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+            50% { transform: scale(1.05); box-shadow: 0 15px 40px rgba(255, 215, 0, 0.5); }
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(255, 215, 0, 0.6);
+        }
+        
+        .offer-badges {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .offer-badge {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 16px;
+            border: 2px solid rgba(255,255,255,0.3);
+            animation: fadeIn 1s ease-out backwards;
+            transition: all 0.3s ease;
+        }
+
+        .offer-badge:nth-child(1) { animation-delay: 0.8s; }
+        .offer-badge:nth-child(2) { animation-delay: 1s; }
+        .offer-badge:nth-child(3) { animation-delay: 1.2s; }
+
+        .offer-badge:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-2px);
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .features {
+                grid-template-columns: 1fr;
+            }
+
+            .result-items {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .why-now-items {
+                flex-direction: column;
+            }
+
+            .main-title {
+                font-size: 36px;
+            }
+
+            .cta-title {
+                font-size: 28px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .result-items {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .floating-elements {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .float-element {
+            position: absolute;
+            font-size: 60px;
+            opacity: 0.15;
+            animation: floatAround 15s infinite linear;
+        }
+        
+        @keyframes floatAround {
+            from { transform: translateY(100vh) rotate(0deg); }
+            to { transform: translateY(-100px) rotate(360deg); }
+        }
+        
+        .float-element:nth-child(1) { left: 10%; animation-delay: 0s; }
+        .float-element:nth-child(2) { left: 30%; animation-delay: 3s; }
+        .float-element:nth-child(3) { left: 50%; animation-delay: 6s; }
+        .float-element:nth-child(4) { left: 70%; animation-delay: 9s; }
+        .float-element:nth-child(5) { left: 90%; animation-delay: 12s; }
+    </style>
+</head>
+<body>
+    <!-- 背景装饰 -->
+    <div class="bg-decoration">
+        <div class="circle-float circle-1"></div>
+        <div class="circle-float circle-2"></div>
+        <div class="circle-float circle-3"></div>
+    </div>
+
+    <div class="poster">
+        <!-- 顶部彩色条 -->
+        <div class="top-bar"></div>
+
+        <div class="header">
+            <h1 class="main-title">AI魔法课堂</h1>
+            <p class="subtitle">让孩子从"玩手机"变成"AI小魔法师"</p>
+            <span class="age-badge">🎈 幼儿园大班 5-6岁 🎈</span>
+        </div>
+        
+        <div class="content">
+            <div class="highlight-box">
+                <div class="highlight-icon">🎯</div>
+                <h2 class="highlight-title">不是让AI教孩子</h2>
+                <p class="highlight-text">而是让孩子学会"指挥"AI<br>培养未来20年最重要的能力</p>
+            </div>
+            
+            <div class="features">
+                <div class="feature-card">
+                    <div class="feature-emoji">🗣️</div>
+                    <h3 class="feature-title">语言表达力</h3>
+                    <p class="feature-desc">学会清楚描述"我想要什么"，结构化表达从小培养</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-emoji">🎨</div>
+                    <h3 class="feature-title">创造想象力</h3>
+                    <p class="feature-desc">把天马行空的想法变成可见的作品</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-emoji">🎯</div>
+                    <h3 class="feature-title">专注与秩序</h3>
+                    <p class="feature-desc">在"我说→AI做"中培养耐心和规则意识</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-emoji">😊</div>
+                    <h3 class="feature-title">情绪认知</h3>
+                    <p class="feature-desc">通过表情识别游戏，学会表达和管理情绪</p>
+                </div>
+            </div>
+            
+            <div class="results-section">
+                <h2 class="results-title">🌟 每学期看得见的成果</h2>
+                <div class="result-items">
+                    <div class="result-item">
+                        <div class="result-icon">🖼️</div>
+                        <p class="result-text">AI魔法画作</p>
+                        <p class="result-desc">用AI创作梦幻画作</p>
+                    </div>
+                    <div class="result-item">
+                        <div class="result-icon">📚</div>
+                        <p class="result-text">趣味故事绘本</p>
+                        <p class="result-desc">AI帮我讲故事</p>
+                    </div>
+                    <div class="result-item">
+                        <div class="result-icon">🎬</div>
+                        <p class="result-text">创意小动画</p>
+                        <p class="result-desc">让图画动起来</p>
+                    </div>
+                    <div class="result-item">
+                        <div class="result-icon">😊</div>
+                        <p class="result-text">表情情绪卡</p>
+                        <p class="result-desc">认识各种表情</p>
+                    </div>
+                    <div class="result-item">
+                        <div class="result-icon">🎤</div>
+                        <p class="result-text">趣味配音作品</p>
+                        <p class="result-desc">给动画配声音</p>
+                    </div>
+                    <div class="result-item">
+                        <div class="result-icon">🏆</div>
+                        <p class="result-text">AI魔法作品展</p>
+                        <p class="result-desc">展示我的创作</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="parent-quote">
+                <p class="quote-text">"与其担心孩子沉迷手机，不如让技术成为创作工具。早一年开窍，后面每一年都在吃复利。"</p>
+                <p class="quote-author">—— 来自已报名家长的真实感受</p>
+            </div>
+            
+            <div class="why-now">
+                <h2 class="why-now-title">为什么要从5岁开始？</h2>
+                <div class="why-now-items">
+                    <div class="why-item">
+                        <div class="why-number">5-6岁</div>
+                        <p class="why-text">语言敏感期<br>最佳启蒙窗口</p>
+                    </div>
+                    <div class="why-item">
+                        <div class="why-number">85%</div>
+                        <p class="why-text">大脑发育完成<br>认知能力爆发期</p>
+                    </div>
+                    <div class="why-item">
+                        <div class="why-number">10倍</div>
+                        <p class="why-text">比10岁后学习<br>效果提升倍数</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="cta-section">
+            <div class="floating-elements">
+                <span class="float-element">🚀</span>
+                <span class="float-element">⭐</span>
+                <span class="float-element">🎨</span>
+                <span class="float-element">🤖</span>
+                <span class="float-element">✨</span>
+            </div>
+            <h2 class="cta-title">给孩子一个不一样的起点</h2>
+            <p class="cta-subtitle">20年前学电脑的孩子，今天都成了互联网精英<br>今天学AI的孩子，将成为未来的领导者！</p>
+            <a href="#" class="cta-button">立即报名体验课</a>
+            <div class="offer-badges">
+                <span class="offer-badge">✨ 小班精品教学</span>
+                <span class="offer-badge">🎁 免费体验课程</span>
+                <span class="offer-badge">👨‍👩‍👧 家长同步学习</span>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
